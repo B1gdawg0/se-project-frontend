@@ -1,6 +1,4 @@
-# Project Title
-
-A brief description of your project, its purpose, and what it does.
+# SE Project Frontend
 
 ## Table of Contents
 
