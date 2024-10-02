@@ -5,10 +5,17 @@ export const metadata = {
   description: "Web something...(Replace this later)",
 };
 
+import localFont from 'next/font/local'
+
+//👇 Configure our local font object
+const perpetuaReg = localFont({ src: './fonts/perpetua.ttf' })
+
+
+
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body>
+      <body className = {`${perpetuaReg.className} antialiased`}> 
         {children}
       </body>
     </html>

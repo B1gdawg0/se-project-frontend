@@ -11,7 +11,7 @@ async function AuthPage(){
 
     return(
         <div>
-            <button onClick={()=>go.push("/homepage")} className="text-cyan-600 bg-black py-3 px-8">Homepage</button>
+            <button onClick={()=>go.push("/homepage")} className=" text-cyan-600 bg-black py-3 px-8">Homepage</button>
         </div>
     )
 }
