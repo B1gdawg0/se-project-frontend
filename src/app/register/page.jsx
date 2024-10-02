@@ -205,7 +205,23 @@ export default function LoginPage() {
           </div>
 
           <div className="flex flex-col w-[30rem]">
+            <div className="flex flex-row">Phone</div>
+            <div className="flex flex-row justify-between gap-2">
+              <input type="input" name="" id="" className="w-full bg-transparent border-[1px] border-white 
+                rounded-[0.3rem] px-2 py-[0.525rem]" />
+            </div>
+          </div>
+
+          <div className="flex flex-col w-[30rem]">
             <div className="flex flex-row">Email</div>
+            <div className="flex flex-row justify-between gap-2">
+              <input type="email" name="" id="" className="w-full bg-transparent border-[1px] border-white 
+                rounded-[0.3rem] px-2 py-[0.525rem]" />
+            </div>
+          </div>
+
+          <div className="flex flex-col w-[30rem]">
+            <div className="flex flex-row">Password</div>
             <div className="flex flex-row justify-between gap-2">
               <input type="email" name="" id="" className="w-full bg-transparent border-[1px] border-white 
                 rounded-[0.3rem] px-2 py-[0.525rem]" />
@@ -213,15 +229,7 @@ export default function LoginPage() {
 
           </div>
           <div className="flex flex-col w-[30rem]">
-            <div className="flex flex-row">Email</div>
-            <div className="flex flex-row justify-between gap-2">
-              <input type="email" name="" id="" className="w-full bg-transparent border-[1px] border-white 
-                rounded-[0.3rem] px-2 py-[0.525rem]" />
-            </div>
-
-          </div>
-          <div className="flex flex-col w-[30rem]">
-            <div className="flex flex-row">Email</div>
+            <div className="flex flex-row">Confirm Password</div>
             <div className="flex flex-row justify-between gap-2">
               <input type="email" name="" id="" className="w-full bg-transparent border-[1px] border-white 
                 rounded-[0.3rem] px-2 py-[0.525rem]" />
