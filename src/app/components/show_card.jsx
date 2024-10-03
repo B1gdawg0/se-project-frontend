@@ -7,7 +7,7 @@ export default function ShowCard(show) {
       </div>
       <div className="text-white text-[1.25rem]">{show.desc}</div>
       <div className="">
-        <button type="button" className="bg-main p-3">
+        <button type="button" className="bg-main p-3 text-[2rem]">
           Show more
         </button>
       </div>
