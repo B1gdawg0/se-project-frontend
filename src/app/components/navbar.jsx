@@ -42,7 +42,7 @@ export default function Navbar() {
       {/* Lower Section */}
       <div className="flex flex-row mx-[0.88rem] my-[0.5rem]  border-main border-2 justify-between">
         {/* first section */}
-        <div className="flex flex-row gap-2 px-3 justify-between items-center text-white w-[23rem] h-[6rem]">
+        <div className="flex flex-row gap-2 px-3 justify-between items-center text-white w-[23rem] h-[6rem] text-[1.125rem]">
           <div className="flex justify-center items-center w-full h-full hover:text-main hover:cursor-pointer">
             HOME
           </div>
@@ -67,9 +67,9 @@ export default function Navbar() {
           <div className="flex justify-center items-center text-[4rem]"> THE GROOVE ROOM</div>
         </div>
         {/* third section */}
-        <div className="flex flex-row justify-between w-[19rem] h-[6rem] text-white ">
-          <div className="flex justify-center items-center "> SIGN IN </div>
-          <div className="flex flex-row gap-2 justify-center items-center px-3 text-main hover:bg-main hover:text-background">
+        <div className="flex flex-row justify-between w-[19rem] h-[6rem] text-white text-[1.125rem] ">
+          <div className="flex justify-center items-center hover:cursor-pointer hover:text-main"> SIGN IN </div>
+          <div className="flex flex-row gap-2 justify-center items-center px-3 text-main transition-all  hover:bg-main hover:text-background hover:cursor-pointer  hover:text-[1.3rem]">
             <CiBeerMugFull className="w-[1.23rem] h-[1.23rem]" />
             RESERVATION
           </div>

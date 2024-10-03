@@ -16,7 +16,7 @@ function HomePage() {
         <div className="absolute bottom-[55%] left-[37%] z-10  text-white text-[10rem]">DRINK</div>
         <div className="absolute bottom-[47%] left-[47%] z-20  text-main text-[10rem]">&</div>
         <div className="absolute bottom-[38%] left-[33%] z-30  text-white text-[10rem]"> GROOVE </div>
-        <div className="bg-[url('../images/Banner.jpg')] bg-cover bg-center grayscale w-screen h-[53.3rem] hover:grayscale-0 z-0"></div>
+        <div className="bg-[url('../images/Banner.jpg')] z-0 bg-cover bg-center grayscale w-screen h-[53.3rem]  transition-all ease-in-out hover:grayscale-0 "></div>
       </div>
       <div className="bg-secondary_background flex flex-col items-center justify-around h-screen">
         <div>
