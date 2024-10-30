@@ -5,4 +5,4 @@ export default function FacilityCard({ icons, topic, detail }) {
         <div className="text-[2.25rem]">{topic}</div>
         <div className="text-wrap text-center text-[1.5rem]">{detail}</div>
     </div>
-}git 
+} 

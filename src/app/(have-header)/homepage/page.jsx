@@ -1,17 +1,15 @@
-import Navbar from "../components/navbar"
-import DotDivider from "../components/dot_divider"
-import FacilityCard from "../components/faci_card";
+import DotDivider from "../../components/dot_divider"
+import FacilityCard from "../../components/faci_card";
 import { FaMusic } from "react-icons/fa6";
 import { TbTargetArrow } from "react-icons/tb";
 import { IoFootball } from "react-icons/io5";
 import { GiPoolTableCorner } from "react-icons/gi";
-import ShowCard from "../components/show_card";
-import Footer from "../components/footer";
+import ShowCard from "../../components/show_card";
+import Footer from "../../components/footer";
 
 function HomePage() {
   return (
     <div className="bg-background">
-      <Navbar />
       <div className="w-screen relative">
         <div className="absolute bottom-[55%] left-[37%] z-10  text-white text-[10rem]">DRINK</div>
         <div className="absolute bottom-[47%] left-[47%] z-20  text-main text-[10rem]">&</div>
