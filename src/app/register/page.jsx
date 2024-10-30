@@ -1,6 +1,5 @@
 import { FcGoogle } from "react-icons/fc";
 
-
 export default function LoginPage() {
   return (
     <div className="w-screen h-screen bg-background p-[3.75rem] text-white">
@@ -239,6 +238,7 @@ export default function LoginPage() {
 
         </div>
       </div>
+
     </div >
 
   )
