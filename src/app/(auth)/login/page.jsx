@@ -1,7 +1,23 @@
 'use client'
 import { FcGoogle } from "react-icons/fc";
+import {LoginAPI} from "../../../hook/auth"
+import { useRouter } from "next/navigation";
 
 export default function RegisterPage() {
+
+  const router = useRouter()
+
+  const Login = (email, password)=>{
+    LoginAPI({email, password}).then(
+      function(response){
+        if(response.status === 200){
+          // wait to implement next auth to this and token storing here
+
+          router.push("/homepage")
+        }
+      }
+    )
+  }
   return (
     <div className="w-screen h-screen bg-background p-[3.75rem] text-white">
       <div className="flex flex-col w-full h-full border-main border-2">
@@ -68,7 +84,7 @@ export default function RegisterPage() {
                 </div>
               </div>
               <button className="w-full bg-main py-[1rem] flex flex-row items-center justify-center gap-2 rounded-[0.3rem] text-[1.25rem] font-bold"
-                onClick={() => console.log("Click")}
+                onClick={() => Login("Hello", "World?")}
               >
                 LOGIN
               </button>
