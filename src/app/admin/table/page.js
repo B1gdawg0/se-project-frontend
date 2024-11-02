@@ -61,7 +61,10 @@ export default function Table() {
                     </tbody>
                 </table>
             ) : (
-                <div>No tables available.</div>
+                <div className="text-center text-white bg-secondary_main py-4 px-8 rounded-md border-2 border-main shadow-lg">
+                <p className="text-xl font-semibold">No orders available</p>
+                <p className="text-sm opacity-70">Please check back later.</p>
+            </div>
             )}
         </div>
     );

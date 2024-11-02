@@ -23,6 +23,10 @@ export default function AdminNavbar() {
             Confirm Table
           </div>
           <DotDivider />
+          <div onClick={() => router.push("/admin/order")} className="flex justify-center items-center w-auto h-full hover:text-main hover:cursor-pointer">
+            Confirm Order
+          </div>
+          <DotDivider />
           <div onClick={() => router.push("/admin/music")} className="flex justify-center items-center w-auto h-full hover:text-main hover:cursor-pointer">
             Show Music
           </div>
@@ -38,15 +42,12 @@ export default function AdminNavbar() {
           <div onClick={() => router.push("/admin/menu")} className="flex justify-center items-center w-auto h-full hover:text-main hover:cursor-pointer">
             All Menu
           </div>
-          <DotDivider />
-          <div onClick={() => router.push("/admin/order")} className="flex justify-center items-center w-auto h-full hover:text-main hover:cursor-pointer">
-            Confirm Order
-          </div>
+          
         </div>
 
         {/* third section */}
         <div className="flex flex-row justify-between items-center w-[19rem] h-[6rem] text-white text-[1.125rem] flex-nowrap">
-          <div className="flex flex-row gap-2 justify-center items-center px-3 text-main transition-all hover:bg-main hover:text-background hover:cursor-pointer hover:text-[1.3rem] ml-auto mr-10">
+          <div onClick={() => router.push("/homepage")} className="flex flex-row gap-2 justify-center items-center px-3 text-main transition-all hover:bg-main hover:text-background hover:cursor-pointer hover:text-[1.3rem] ml-auto mr-10">
             <CiBeerMugFull className="w-[1.23rem] h-[1.23rem]" />
             LOGOUT
           </div>

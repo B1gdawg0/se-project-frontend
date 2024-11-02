@@ -56,7 +56,7 @@ export default function MenuForm() {
     };
 
     return (
-        <div className="bg-background w-screen h-screen flex justify-center items-center p-6">
+        <div className="bg-background w-screen h-screen flex justify-center items-start p-6">
             <div className="flex w-full max-w-6xl bg-secondary_main rounded-lg shadow-lg overflow-hidden">
                 {/* Image Preview Section */}
                 <div className="flex-shrink-0 w-1/2 p-4 border-main flex items-center justify-center">
@@ -76,13 +76,13 @@ export default function MenuForm() {
                 </div>
 
                 {/* Form Section */}
-                <form onSubmit={handleSubmit} className="flex flex-col gap-4 w-1/2 p-4">
-                    <h2 className="text-2xl font-semibold text-center text-main mb-6">Add New Menu Item</h2>
+                <form onSubmit={handleSubmit} className="flex flex-col gap-4 w-1/2 p-4 ">
+                    <h2 className="text-2xl font-semibold  text-center text-main mt-4">Add New Menu Item</h2>
                     <div>
                         <label className="block text-white mb-1" htmlFor="price">Price</label>
                         <input
                             type="number"
-                            step="0.01"
+                            step="10"
                             name="price"
                             value={menuData.price}
                             onChange={handleChange}
