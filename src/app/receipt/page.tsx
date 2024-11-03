@@ -10,7 +10,7 @@ export default function page() {
       {/* Header */}
       <div className="py-[2rem] relative mx-[2rem]">
         <div className="absolute align-middle">
-          <button onClick={() => { router.push("/homepage") }}>
+          <button onClick={() => { router.push("/order") }}>
             <Back />
           </button>
         </div>
