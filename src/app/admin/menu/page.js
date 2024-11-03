@@ -41,7 +41,7 @@ export default function Menu() {
                         <div className="p-4">
                             <h3 className="text-lg text-white font-bold">{item.m_description}</h3>
                             <p className="text-white mt-2">Price: {item.m_price} .-</p>
-                        </div>
+                                </div>
                     </div>
                 ))}
             </div>
