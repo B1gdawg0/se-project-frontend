@@ -1,9 +1,9 @@
 import React from "react";
 import Navbar from "../components/navbar";
 import Card from "../components/Card";
-import Dance from "../components/DancingInTheBurningRoom";
-import RightWing from "../components/RightWing";
-import LeftWing from "../components/LeftWing";
+import Dance from "../svg/DancingInTheBurningRoom";
+import RightWing from "../svg/RightWing";
+import LeftWing from "../svg/LeftWing";
 
 export default function Reserved() {
   return (
