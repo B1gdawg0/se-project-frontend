@@ -1,5 +1,7 @@
+
 "use client";
 import { useState, useEffect } from "react";
+import { GetIGline } from "../../../hook/ig";
 
 export default function Instagram() {
     const [instagram, setInstagram] = useState([]);
@@ -7,12 +9,8 @@ export default function Instagram() {
     useEffect(() => {
         async function fetchInstagramData() {
             try {
-                const response = await fetch("http://localhost:8000/ig-lines", {
-                    headers: {
-                        Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhlbGxvQGdtYWlsLmNvbSIsImV4cCI6MTczMDcxMzM1Niwicm9sZSI6ImN1c3RvbWVyIiwidXNlcl9pZCI6ImY5ZWQ0ZjU2LWE0YWMtNDAyZi1hNjcwLWQ1NzRkZDg1NjUyZCJ9.DUHw1IUBhrHpnZyMV7RP9IfyLZERwI6eWyeV-iUJhdI`
-                    }
-                });
-                const data = await response.json();
+                const response = await GetIGline();
+                const data = response.data; // Access data directly from response
                 if (data.payload && data.payload.iglines) {
                     const transformedData = data.payload.iglines.map((item) => ({
                         id: item.ID,
