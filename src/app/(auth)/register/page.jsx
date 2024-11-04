@@ -1,6 +1,43 @@
-import { FcGoogle } from "react-icons/fc";
+'use client'
+import { useState } from "react";
+import {RegisterAPI} from "../../../hook/auth"
+import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
+  const [formData, setFormData] = useState({
+    "email":"",
+    "password":"",
+    "phone":"",
+    "fname":"",
+    "lname":"",
+    "confirm-password":""
+  })
+
+  const router = useRouter()
+  const Register = async()=>{
+    try{
+      if (formData['password'] !== formData["confirm-password"]){
+         return alert("password doesn't match")
+      }
+      if (!formData['password'] || !formData['confirm-password'] || !formData['email'] || !formData['fname'] || !formData['lname'] || !formData['phone']) return alert("Fill all fields before create account")
+      const res = await RegisterAPI(formData)
+
+      if(res.status === 201){
+        return router.back()
+    }
+    }catch(e){
+      return alert("Can't register. Please try again")
+    }
+  }
+  
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value
+    }));
+  };
+
   return (
     <div className="w-screen h-screen bg-background p-[3.75rem] text-white">
       <div className="flex flex-col w-full h-full border-main border-2">
@@ -195,10 +232,10 @@ export default function LoginPage() {
             <div className="flex flex-row">Name</div>
 
             <div className="flex flex-row justify-between gap-2">
-              <input type="email" name="" id="" className="w-full bg-transparent border-[1px] border-white 
-                rounded-[0.3rem] px-2 py-[0.525rem]" />
-              <input type="email" name="" id="" className="w-full bg-transparent border-[1px] border-white 
-                rounded-[0.3rem] px-2 py-[0.525rem]" />
+              <input type="email" name="fname" id="" className="w-full bg-transparent border-[1px] border-white 
+                rounded-[0.3rem] px-2 py-[0.525rem]" onChange={handleChange} />
+              <input type="email" name="lname" id="" className="w-full bg-transparent border-[1px] border-white 
+                rounded-[0.3rem] px-2 py-[0.525rem]" onChange={handleChange} />
             </div>
 
           </div>
@@ -206,35 +243,35 @@ export default function LoginPage() {
           <div className="flex flex-col w-[30rem]">
             <div className="flex flex-row">Phone</div>
             <div className="flex flex-row justify-between gap-2">
-              <input type="input" name="" id="" className="w-full bg-transparent border-[1px] border-white 
-                rounded-[0.3rem] px-2 py-[0.525rem]" />
+              <input type="input" name="phone" id="" className="w-full bg-transparent border-[1px] border-white 
+                rounded-[0.3rem] px-2 py-[0.525rem]" onChange={handleChange} />
             </div>
           </div>
 
           <div className="flex flex-col w-[30rem]">
             <div className="flex flex-row">Email</div>
             <div className="flex flex-row justify-between gap-2">
-              <input type="email" name="" id="" className="w-full bg-transparent border-[1px] border-white 
-                rounded-[0.3rem] px-2 py-[0.525rem]" />
+              <input type="email" name="email" id="" className="w-full bg-transparent border-[1px] border-white 
+                rounded-[0.3rem] px-2 py-[0.525rem]" onChange={handleChange} />
             </div>
           </div>
 
           <div className="flex flex-col w-[30rem]">
             <div className="flex flex-row">Password</div>
             <div className="flex flex-row justify-between gap-2">
-              <input type="email" name="" id="" className="w-full bg-transparent border-[1px] border-white 
-                rounded-[0.3rem] px-2 py-[0.525rem]" />
+              <input type="email" name="password" id="" className="w-full bg-transparent border-[1px] border-white 
+                rounded-[0.3rem] px-2 py-[0.525rem]" onChange={handleChange}  />
             </div>
 
           </div>
           <div className="flex flex-col w-[30rem]">
             <div className="flex flex-row">Confirm Password</div>
             <div className="flex flex-row justify-between gap-2">
-              <input type="email" name="" id="" className="w-full bg-transparent border-[1px] border-white 
-                rounded-[0.3rem] px-2 py-[0.525rem]" />
+              <input type="email" name="confirm-password" id="" className="w-full bg-transparent border-[1px] border-white 
+                rounded-[0.3rem] px-2 py-[0.525rem]" onChange={handleChange}  />
             </div>
           </div>
-          <button className="w-[25rem] bg-main py-[1rem] flex flex-row items-center justify-center gap-2 rounded-[0.3rem] text-[1.25rem] font-bold"> REGISTER </button>
+          <button className="w-[25rem] bg-main py-[1rem] flex flex-row items-center justify-center gap-2 rounded-[0.3rem] text-[1.25rem] font-bold" onClick={Register}> REGISTER </button>
 
         </div>
       </div>

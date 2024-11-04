@@ -1,7 +1,42 @@
 'use client'
 import { FcGoogle } from "react-icons/fc";
+import {LoginAPI} from "../../../hook/auth"
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 export default function RegisterPage() {
+  const [formData, setFormData] = useState({
+    email:"",
+    password:""
+  });
+
+  const router = useRouter()
+
+  const Login = async()=>{
+    const {email, password} = formData
+    if(!email || !password) return alert("You must fill email and password field before login")
+    const res = await LoginAPI(formData)
+
+    if(res.status === 200){
+      const {token} = res.data
+      sessionStorage.setItem("user",JSON.stringify({
+        email,
+        token
+      }))
+      return router.push("/homepage")
+    }
+
+    return alert("Wrong email or password. Please try again")
+  }
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value
+    }));
+  };
+
   return (
     <div className="w-screen h-screen bg-background p-[3.75rem] text-white">
       <div className="flex flex-col w-full h-full border-main border-2">
@@ -49,13 +84,13 @@ export default function RegisterPage() {
               <div className="flex flex-col gap-2">
                 <div className="flex flex-col justify-between gap-2">
                   <div>Email</div>
-                  <input type="email" name="" id="" className="w-full bg-transparent border-[1px] border-white 
-                rounded-[0.3rem] px-2 py-[0.525rem]" />
+                  <input type="email" name="email" id="" className="w-full bg-transparent border-[1px] border-white 
+                rounded-[0.3rem] px-2 py-[0.525rem]" onChange={handleChange}/>
                 </div>
                 <div className="flex flex-col justify-between gap-2">
                   <div>Password</div>
-                  <input type="password" name="" id=" " className="w-full bg-transparent border-[1px] border-white 
-                rounded-[0.3rem] px-2 py-[0.525rem]" />
+                  <input type="password" name="password" id=" " className="w-full bg-transparent border-[1px] border-white 
+                rounded-[0.3rem] px-2 py-[0.525rem]" onChange={handleChange}/>
                   <div className="flex flex-row gap-1 items-center justify-between">
                     <div className="flex flex-row flex-1 gap-2 py-2">
                       <input type="checkbox" name="" id="" />
@@ -68,7 +103,7 @@ export default function RegisterPage() {
                 </div>
               </div>
               <button className="w-full bg-main py-[1rem] flex flex-row items-center justify-center gap-2 rounded-[0.3rem] text-[1.25rem] font-bold"
-                onClick={() => console.log("Click")}
+                onClick={Login}
               >
                 LOGIN
               </button>
@@ -82,7 +117,7 @@ export default function RegisterPage() {
           {/* Third Section */}
           <div className="flex flex-row  flex-shrink-0 items-end gap-3">
             <div> Not Registered Yet? </div>
-            <a href=""> Create an Account </a>
+            <a href="/register"> Create an Account </a>
           </div>
         </div>
       </div>
