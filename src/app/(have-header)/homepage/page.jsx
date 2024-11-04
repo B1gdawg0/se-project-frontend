@@ -1,3 +1,4 @@
+'use client'
 import DotDivider from "../../components/dot_divider"
 import FacilityCard from "../../components/faci_card";
 import { FaMusic } from "react-icons/fa6";
@@ -6,8 +7,30 @@ import { IoFootball } from "react-icons/io5";
 import { GiPoolTableCorner } from "react-icons/gi";
 import ShowCard from "../../components/show_card";
 import Footer from "../../components/footer";
+import { useEffect } from "react";
+import { GetUser } from "../../../hook/user";
+import { GetUserData } from "../../../../utils/user";
 
 function HomePage() {
+
+  useEffect(()=>{
+    const userSes = GetUserData()
+    if (!userSes) return
+    const fetchData = async()=>{
+      const user = await GetUser(userSes.ID)
+      const sesCurrent = JSON.parse(sessionStorage.getItem("user"))
+      sessionStorage.setItem("user",JSON.stringify({
+          "email":sesCurrent.email,
+          "token":sesCurrent.token,
+          "user":user.data.payload.user
+      }))
+      console.log(sesCurrent)
+      console.log(sessionStorage.getItem("user"))
+    }
+
+    fetchData()
+  },[])
+
   return (
     <div className="bg-background">
       <div className="w-full relative">
