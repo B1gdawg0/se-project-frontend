@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { GetMusic } from "../../../hook/music"; // Ensure this is fetching music data correctly
 
 export default function Music() {
     const [music, setMusic] = useState([]);
@@ -8,18 +9,18 @@ export default function Music() {
     useEffect(() => {
         const fetchMusic = async () => {
             try {
-                const response = await axios.get("http://localhost:8000/music-lines", {
-                    headers: {
-                        Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhlbGxvQGdtYWlsLmNvbSIsImV4cCI6MTczMDcxMzM1Niwicm9sZSI6ImN1c3RvbWVyIiwidXNlcl9pZCI6ImY5ZWQ0ZjU2LWE0YWMtNDAyZi1hNjcwLWQ1NzRkZDg1NjUyZCJ9.DUHw1IUBhrHpnZyMV7RP9IfyLZERwI6eWyeV-iUJhdI`
-                    }
-                });
+                const response = await GetMusic();
+                const data = response.data;
 
-                const musicData = response.data.payload.MusicLines.map((line) => ({
-                    id: line.ID,
-                    m_name: line.Name
-                }));
+                // Ensure you're accessing the correct data structure
+                if (data.payload && data.payload.MusicLines) {
+                    const musicData = data.payload.MusicLines.map((line) => ({
+                        id: line.ID,
+                        m_name: line.Name
+                    }));
 
-                setMusic(musicData);
+                    setMusic(musicData);
+                }
             } catch (error) {
                 console.error("Error fetching music lines:", error);
             }
@@ -28,9 +29,19 @@ export default function Music() {
         fetchMusic();
     }, []);
 
-    const deleteMusic = (id) => {
-        // Update state to remove the deleted music from the frontend
-        setMusic(music.filter(item => item.id !== id));
+    const deleteMusic = async (id) => {
+        try {
+            // Make a DELETE request to the server to remove the music line
+            await axios.delete(`http://localhost:8000/music-lines/${id}`, {
+                headers: {
+                    Authorization: `Bearer YOUR_ACCESS_TOKEN_HERE`, // Replace with a method to get the token
+                }
+            });
+            // Update state to remove the deleted music from the frontend
+            setMusic(music.filter(item => item.id !== id));
+        } catch (error) {
+            console.error("Error deleting music line:", error);
+        }
     };
 
     return (
