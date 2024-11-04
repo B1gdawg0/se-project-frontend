@@ -3,18 +3,32 @@ import DotDivider from "../../components/dot_divider";
 import MakeAReservation from "../../components/make-a-reservation";
 import stage from "../../../images/stage.png"
 import ChooseZone from '../../components/choose-zone';
+import { useState } from "react";
+import { useRouter } from "next/router";
+import { GetTables } from "../../../hook/table";
 
 
 
 function ReservationPage() {
+    const [table, setTable] = useState([])
+    const router = useRouter()
 
-    const zones = {
-        "204": 'A', // Available
-        "205": 'R', // Reserved
-        "206": 'O', // Occupied
-        "207": 'A', // Available
-        "208": 'R', // Reserved
-    };
+    useEffect(()=>{
+        if(!CheckUserToken()){
+            return router.push('/login')
+        }
+        const fetchData = async() =>{
+            const res = await GetTables()
+            
+            if(res.status === 200){
+                console.log(res.data.payload.tables.tables)
+                setTable(res.data.payload.tables.tables)
+            }
+        }
+
+        fetchData();
+    }
+    ,[])
 
     return (
         <div className="bg-background flex flex-col items-center py-10 gap-9">
