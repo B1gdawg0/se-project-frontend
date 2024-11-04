@@ -1,13 +1,19 @@
 'use client'
 
 import { useRouter } from "next/navigation";
+import Back from "../svg/BackButton";
 
 export default function Dashboard() {
     const router = useRouter();
 
 
     return (
-        <div className="bg-background w-screen h-screen p-5 flex items-center justify-center">
+        <div className="bg-background w-screen h-screen p-5 flex relative items-center justify-center">
+            <div className="absolute top-20 left-20 z-10">
+                <button  onClick={() => router.push("/homepage")}>
+                    <Back />
+                </button>
+            </div>
             <div className="border-2 border-gold w-full h-full rounded-lg shadow-lg overflow-hidden">
                 <div className="flex flex-col justify-between h-full sm:flex-row">
 

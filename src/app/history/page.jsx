@@ -2,9 +2,13 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { GetToken } from '../../hook/token';
+import Back from '../svg/BackButton';
+import { useRouter } from 'next/navigation';
 
 const OrderHistory = () => {
     const [orderHistory, setOrderHistory] = useState([]);
+
+    const router = useRouter();
 
 
     const getOrders = async (id) => {
@@ -48,7 +52,12 @@ const OrderHistory = () => {
 
 
     return (
-        <div className="bg-background min-h-screen text-gray-200">
+        <div className="bg-background min-h-screen relative text-gray-200">
+            <div className="absolute top-8 left-10 z-10">
+                <button  onClick={() => router.push("/dashboard")}>
+                    <Back />
+                </button>
+            </div>
             <h1 className="text-4xl font-serif text-main text-center py-8">Order History</h1>
             <div className="container mx-auto p-6">
                 {orderHistory.length > 0 ? (

@@ -167,7 +167,7 @@ function ChooseZone({ zones }) {
                                 <div className='flex flex-col justify-center flex-grow p-2'>
                                     {/* <p className='font-semibold text-3xl'>{obj.name}</p> */}
                                     <p className='text-xl'>{obj['m_description']}</p>
-                                    <p className='font-bold text-3xl'>${obj['m_price'].toFixed(2)}</p>
+                                    <p className='font-bold text-3xl'>{obj['m_price'].toFixed(2)} -</p>
                                 </div>
                             </div>
                         ))}
@@ -192,12 +192,12 @@ function ChooseZone({ zones }) {
                     <p className='text-3xl font-semibold'>Apply Discount Code</p>
                     <p className={`text-2xl font-semibold flex items-center ${discountApplied ? 'text-zinc-400 line-through' : 'text-black'}`}>
                         Regular Price:
-                        <span className="ml-2">{`$${selectedItem['m_price'].toFixed(2)}`}</span>
+                        <span className="ml-2">{`${selectedItem['m_price'].toFixed(2)} -`}</span>
                     </p>
 
                     {discountApplied && (
                         <p className='text-4xl font-bold text-green-600'>
-                            Discounted Price: ${selectedItem ? (selectedItem['m_price'] - 5).toFixed(2) : ''}
+                            Discounted Price: {selectedItem ? (selectedItem['m_price'] - 5).toFixed(2): ''}
                         </p>
                     )}
 
