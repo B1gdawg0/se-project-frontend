@@ -1,4 +1,6 @@
 'use client'
+import axios from "axios";
+import { GetToken } from "../../hook/token"
 import { useState } from "react";
 
 export default function RequestPage() {
@@ -23,13 +25,80 @@ export default function RequestPage() {
     function handleImageChange(e) {
         const file = e.target.files[0];
         if (file) {
-            setIgImage(file);
+            setIgImage(URL.createObjectURL(file));
             setImagePreview(URL.createObjectURL(file));
         }
     }
 
     function triggerFileInput() {
         document.getElementById("fileInput").click();
+    }
+
+    function handlePostIg() {
+        async function sendData() {
+
+            try {
+                const token = GetToken();
+                console.log(token);
+                console.log(igAccount, igImage);
+
+                const url = `http://localhost:8000/ig-lines`
+                const res = await axios.post(url,
+                    {
+                        ig_account: igAccount,
+                        ig_image_url: igImage,
+                    },
+                    {
+                        headers:
+                        {
+                            'Authorization': token,
+                        },
+                    }
+                );
+
+                if (res.status === 200) {
+                    alert("Posted to Instagram successfully!");
+                } else {
+                    alert("Failed to post to Instagram!");
+                }
+            } catch (err) {
+                alert("Failed to post to Instagram!");
+            }
+        }
+        sendData();
+    }
+    function handleSendRequestSong() {
+        async function sendData() {
+
+            try {
+                const token = GetToken();
+                console.log(token);
+                console.log(songSearch);
+
+                const url = `http://localhost:8000/music-lines`
+                const res = await axios.post(url,
+                    {
+                        music_name: songSearch,
+
+                    },
+                    {
+                        headers:
+                        {
+                            'Authorization': token,
+                        },
+                    }
+                );
+
+                if (res.status === 200) {
+                    alert("Request Song successfully!");
+                } else {
+                    alert("Failed to Request Song!");
+                }
+            } catch (err) {
+                alert("Failed to Request Song!");
+            }
+        }
+        sendData();
     }
 
     return (
@@ -68,7 +137,7 @@ export default function RequestPage() {
                                             onChange={(e) => setSongSearch(e.target.value)}
                                             className="border-main p-2 rounded w-1/3"
                                         />
-                                        <button className="bg-main text-secondary-main mx-2 py-2 px-5 rounded">Send</button>
+                                        <button onClick={handleSendRequestSong} className="bg-main text-secondary-main mx-2 py-2 px-5 rounded">Send</button>
                                     </div>
                                 </div>
                             </div>
@@ -102,10 +171,10 @@ export default function RequestPage() {
                                             type="text"
                                             placeholder="Enter IG account..."
                                             value={igAccount}
-                                            onChange={(e) => setIgAccount(e.target.value)}
+                                            onChange={(e) => { setIgAccount(e.target.value) }}
                                             className="border p-2 rounded w-[15rem] mb-4"
                                         />
-                                        <button className="bg-main text-secondary-main p-2 rounded">Post</button>
+                                        <button onClick={handlePostIg} className="bg-main text-secondary-main p-2 rounded">Post</button>
                                     </div>
                                 </div>
                             </div>
