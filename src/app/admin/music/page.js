@@ -2,10 +2,10 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { GetMusic } from "../../../hook/music"; // Ensure this is fetching music data correctly
+import { GetToken } from "../../../hook/token";
 
 export default function Music() {
     const [music, setMusic] = useState([]);
-
     useEffect(() => {
         const fetchMusic = async () => {
             try {
@@ -29,20 +29,7 @@ export default function Music() {
         fetchMusic();
     }, []);
 
-    const deleteMusic = async (id) => {
-        try {
-            // Make a DELETE request to the server to remove the music line
-            await axios.delete(`http://localhost:8000/music-lines/${id}`, {
-                headers: {
-                    Authorization: `Bearer YOUR_ACCESS_TOKEN_HERE`, // Replace with a method to get the token
-                }
-            });
-            // Update state to remove the deleted music from the frontend
-            setMusic(music.filter(item => item.id !== id));
-        } catch (error) {
-            console.error("Error deleting music line:", error);
-        }
-    };
+  
 
     return (
         <div className="bg-background w-screen h-full min-h-screen flex justify-center items-start p-6">
