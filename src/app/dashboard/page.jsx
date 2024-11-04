@@ -1,6 +1,9 @@
 'use client'
-export default function Dashboard() {
 
+import { useRouter } from "next/navigation";
+
+export default function Dashboard() {
+    const router = useRouter();
 
 
     return (
@@ -11,18 +14,18 @@ export default function Dashboard() {
                     {/* Spinning Wheel Section */}
                     <button
                         className="relative flex flex-col justify-center items-center h-full w-full sm:w-1/3 p-5 text-white text-[2.5rem] font-medium hover:text-white hover:bg-background transition duration-300"
-                        onClick={() => console.log("Spinning Wheel clicked")}
+                        onClick={() => router.push("/history")}
                     >
                         <div className="absolute inset-0 bg-bottom opacity-20 grayscale hover:opacity-50 hover:grayscale-0 transition-all duration-500 sm:bg-[url('../images/ArcadeSign.jpg')] rounded-lg"></div>
                         <div className="relative z-10 pointer-events-none hover:shadow-[0px_0px_10px_rgba(0,0,0,0.8)]">
-                            Spinning Wheel
+                            History
                         </div>
                     </button>
 
                     {/* Order Drinks Section */}
                     <button
                         className="relative flex flex-col justify-center items-center h-full w-full sm:w-1/3 p-5 text-white text-[2.5rem] font-medium hover:text-white hover:scale-105 hover:bg-background transition duration-300"
-                        onClick={() => console.log("Order Drinks clicked")}
+                        onClick={() => router.push("/order")}
                     >
                         <div className="absolute inset-0 bg-left opacity-20 grayscale hover:opacity-50 hover:grayscale-0 transition-all duration-500 sm:bg-[url('../images/GoodVibesSign.jpg')] rounded-lg"></div>
                         <div className="relative z-10 pointer-events-none hover:shadow-[0px_0px_10px_rgba(0,0,0,0.8)]">
@@ -33,7 +36,7 @@ export default function Dashboard() {
                     {/* Request Song Section */}
                     <button
                         className="relative flex flex-col justify-center items-center h-full w-full sm:w-1/3 p-5 text-white text-[2.5rem] font-medium hover:text-white hover:scale-105 hover:bg-background transition duration-300"
-                        onClick={() => console.log("Request Song clicked")}
+                        onClick={() => router.push("/request")}
                     >
                         <div className="absolute inset-0  bg-top opacity-20 grayscale hover:opacity-50 hover:grayscale-0 transition-all duration-500 sm:bg-[url('../images/EatDrinkNeon.jpg')] rounded-lg"></div>
                         <div className="relative z-10 pointer-events-none hover:shadow-[0px_0px_10px_rgba(0,0,0,0.8)]">

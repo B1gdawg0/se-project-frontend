@@ -1,7 +1,7 @@
 'use client'
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import DotDivider from "./dot_divider";
-import localFont from 'next/font/local'
+import localFont from 'next/font/local';
 import { CiBeerMugFull } from "react-icons/ci";
 import { BsFillTelephoneFill } from "react-icons/bs";
 import { FaMapMarkerAlt, FaClock } from "react-icons/fa";
@@ -9,19 +9,32 @@ import { MdMail } from "react-icons/md";
 import { useRouter } from "next/navigation";
 import { Menu, X } from "lucide-react";
 
-const perpetuaReg = localFont({ src: '../fonts/perpetua.ttf' })
+const perpetuaReg = localFont({ src: '../fonts/perpetua.ttf' });
 
 export default function Navbar() {
   const router = useRouter();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isLogin, setIsLogin] = useState(false);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
+  const handleLogout = () => {
+    sessionStorage.removeItem("user");
+    setIsLogin(false);
+  };
+
+  useEffect(() => {
+    const user = sessionStorage.getItem("user");
+    if (user) {
+      setIsLogin(true);
+    }
+  }, []);
+
   return (
     <div className={`font-${perpetuaReg} w-full flex flex-col justify-between bg-background`}>
-      {/* upper section */}
+      {/* Upper section */}
       <div className="hidden lg:flex flex-row justify-between items-center mx-4 mt-2 h-8">
         <div className="flex justify-center items-center flex-row gap-4 lg:gap-10">
           <div className="flex flex-row gap-2 items-center text-sm text-white">
@@ -68,8 +81,8 @@ export default function Navbar() {
           <button onClick={() => router.push("/review")} className="p-4 hover:bg-main hover:text-background">
             REVIEW
           </button>
-          <button onClick={() => router.push("/login")} className="p-4 hover:bg-main hover:text-background">
-            SIGN IN
+          <button onClick={isLogin ? handleLogout : () => router.push("/login")} className="p-4 hover:bg-main hover:text-background">
+            {isLogin ? "LOGOUT" : "SIGN IN"}
           </button>
           <button
             onClick={() => router.push("/reservation")}
@@ -104,8 +117,8 @@ export default function Navbar() {
           </button>
 
           <div className="hidden lg:flex flex-row justify-between w-76 h-24 text-white text-lg">
-            <button onClick={() => router.push("/login")} className="flex justify-center items-center px-4 hover:text-main">
-              SIGN IN
+            <button onClick={isLogin ? handleLogout : () => router.push("/login")} className="flex justify-center items-center px-4 hover:text-main">
+              {isLogin ? "LOGOUT" : "SIGN IN"}
             </button>
             <button
               onClick={() => router.push("/reservation")}

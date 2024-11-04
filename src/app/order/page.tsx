@@ -50,7 +50,7 @@ export default function Page() {
     <div className="w-screen min-h-screen bg-background text-white p-4 sm:p-8">
       {/* Header */}
       <div className="flex justify-between items-center mb-6">
-        <button onClick={() => router.push("/homepage")}>
+        <button onClick={() => router.push("/dashboard")}>
           <Back />
         </button>
         <Grape />
@@ -64,12 +64,20 @@ export default function Page() {
 
       {/* Menu */}
       <div className="my-8 p-4 sm:p-8 border-main border border-solid rounded-lg">
-        {error && <div className="text-red-500">{error}</div>} {/* Display error message if any */}
+        {error && <div className="text-red-500">{error}</div>}{" "}
+        {/* Display error message if any */}
         {menuItems.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
             {menuItems.map((item) => (
               <div key={item.m_id} onClick={() => handleClick(item)}>
-                <OrderCard product={{id:item.m_id, price: item.m_price, description: item.m_description, url: item.m_url }} />
+                <OrderCard
+                  product={{
+                    id: item.m_id,
+                    price: item.m_price,
+                    description: item.m_description,
+                    url: item.m_url,
+                  }}
+                />
               </div>
             ))}
           </div>
@@ -87,7 +95,11 @@ export default function Page() {
                 <Back />
               </button>
             </div>
-            <AddProductProduct menu={menu} setIsClick={setIsClick} calculateCartItems={calculateCartItems}/>
+            <AddProductProduct
+              menu={menu}
+              setIsClick={setIsClick}
+              calculateCartItems={calculateCartItems}
+            />
           </div>
         </div>
       )}
