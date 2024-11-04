@@ -13,6 +13,7 @@ module.exports = {
         main : "#F1C761",
         secondary_main : "#2A2A2A",
         header: "#ffffff",
+        gold: '#FFD700',
       },
     },
   },
