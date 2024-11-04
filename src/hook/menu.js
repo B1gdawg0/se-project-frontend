@@ -9,8 +9,8 @@ export function GetMenu(){
     }
 
     return axios.get("http://127.0.0.1:8000/menu",{
-        headers:{
-            Authorization:token
-        }
-    })
+                headers:{
+                    Authorization:token
+                }
+            })
 }
