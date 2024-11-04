@@ -1,17 +1,20 @@
 'use client';
 import { MousePointerClick, ArrowBigLeft } from 'lucide-react';
 import Image from 'next/image';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import beer from "../../images/beer.png";
 import { useRouter } from 'next/navigation';
+import {GetMenu} from "../../hook/menu"
+import { CheckUserToken } from '../../../utils/token';
 
-function ChooseZone({ zones }) {
+function ChooseZone({zones}) {
     const [isButtonVisible, setButtonVisible] = useState(true);
     const [isDropdownVisible, setDropdownVisible] = useState(false);
     const [isConfirmCardVisible, setConfirmCardVisible] = useState(0);
     const [zone, setZone] = useState(null);
     const [selectedItem, setSelectedItem] = useState(null);
     const [discountApplied, setDiscountApplied] = useState(false);
+    const [menu, setMenu] = useState(null)
     const router = useRouter();
 
     const handleApplyDiscount = () => {
@@ -26,8 +29,23 @@ function ChooseZone({ zones }) {
         setDropdownVisible(!isDropdownVisible);
     };
 
+    useEffect(()=>{
+        
+        const fetchMenu = async()=>{
+            const res = await GetMenu()
+
+            if(res.status === 200){
+                setMenu(res.data.payload.menus)
+            }
+        }
+
+        if(CheckUserToken()){
+            fetchMenu();
+        }
+    },[])
+
     const handleZoneClick = (zone) => {
-        if (zones[zone] === 'A') {
+        if (zones[zone]['t_status'] === 'A') {
             setZone(zone);
             setButtonVisible(false);
             setDropdownVisible(false);
@@ -40,39 +58,8 @@ function ChooseZone({ zones }) {
         setButtonVisible(true);
         setDropdownVisible(true);
         setConfirmCardVisible(0);
+        setSelectedItem(null)
     };
-
-    const images = [
-        {
-            src: beer,
-            name: 'Item 1',
-            description: 'Description for Item 1',
-            price: 10.00
-        },
-        {
-            src: beer,
-            name: 'Item 2',
-            description: 'Description for Item 2',
-            price: 12.00
-        },
-        {
-            src: beer,
-            name: 'Item 3',
-            description: 'Description for Item 3',
-            price: 15.00
-        },
-        {
-            src: beer,
-            name: 'Item 4',
-            description: 'Description for Item 4',
-            price: 8.00
-        },
-    ];
-
-    const sortedZones = Object.entries(zones).sort(([, statusA], [, statusB]) => {
-        const priority = { 'A': 1, 'R': 2, 'O': 3 };
-        return (priority[statusA] || 4) - (priority[statusB] || 4);
-    });
 
     return (
         <div className="flex flex-col gap-2">
@@ -90,15 +77,15 @@ function ChooseZone({ zones }) {
 
             {isDropdownVisible && (
                 <div className="bg-gray-300 bg-opacity-30 rounded-lg transition-opacity duration-300">
-                    {sortedZones.map(([zone, status]) => (
+                    {Object.entries(zones).map(([zoneKey,obj]) => (
                         <div 
-                            key={zone} 
-                            onClick={() => handleZoneClick(zone)}
+                            key={zoneKey} 
+                            onClick={() => handleZoneClick(zoneKey)}
                             className="p-4 text-white transition-transform duration-300 hover:scale-105 hover:border-2 hover:border-white rounded-md text-3xl cursor-pointer">
                             <div className='flex justify-between'>
-                                <p className="font-semibold">Table {zone}</p>
-                                <p className={`font-normal ${status === 'A' ? 'text-green-500' : 'text-red-500'}`}>
-                                    {status === 'A' ? 'Available' : 'Not Available'}
+                                <p className="font-semibold">Table {zoneKey}</p>
+                                <p className={`font-normal ${obj['t_status'] === 'A' ? 'text-green-500' : 'text-red-500'}`}>
+                                    {obj['t_status'] === 'A' ? 'Available' : 'Not Available'}
                                 </p>
                             </div>
                         </div>
@@ -116,26 +103,25 @@ function ChooseZone({ zones }) {
                     <p className='font-semibold text-4xl'>Your Table is <span className='font-bold text-green-700'>{zone}</span></p>
                     <p className='text-4xl'>Choose your favorite open set</p>
                     <div className='flex flex-col gap-2 w-full'>
-                        {images.map((obj, index) => (
+                        {Object.entries(menu).map(([index, obj]) => (
                             <div 
                                 key={index} 
                                 className={`flex items-center gap-2 p-2 border border-gray-300 rounded-lg shadow-md transition duration-300 
-                                    ${selectedItem && selectedItem.name === obj.name ? 'bg-gray-200' : 'bg-white'} 
-                                    ${selectedItem && selectedItem.name !== obj.name ? 'opacity-50' : ''}`} 
+                                    ${selectedItem && selectedItem['m_description'] === obj['m_description'] ? 'bg-gray-200' : 'bg-white'} 
+                                    ${selectedItem && selectedItem['m_description'] !== obj['m_description']  ? 'opacity-50' : ''}`} 
                                 onClick={() => handleSelect(obj)} 
                             >
                                 <div className='relative flex-shrink-0 w-[30%] h-24'>
-                                    <Image 
-                                        src={obj.src} 
-                                        alt={obj.name} 
-                                        layout='fill'
-                                        className='rounded-lg object-cover'
-                                    />
+                                <img 
+                                    src={obj['m_url']} 
+                                    alt={obj['m_description']} 
+                                    className='absolute top-0 left-0 w-full h-full object-cover' 
+                                />
                                 </div>
                                 <div className='flex flex-col justify-center flex-grow p-2'>
-                                    <p className='font-semibold text-3xl'>{obj.name}</p>
-                                    <p className='text-xl'>{obj.description}</p>
-                                    <p className='font-bold text-3xl'>${obj.price.toFixed(2)}</p>
+                                    {/* <p className='font-semibold text-3xl'>{obj.name}</p> */}
+                                    <p className='text-xl'>{obj['m_description']}</p>
+                                    <p className='font-bold text-3xl'>${obj['m_price'].toFixed(2)}</p>
                                 </div>
                             </div>
                         ))}
@@ -160,12 +146,12 @@ function ChooseZone({ zones }) {
                 <p className='text-3xl font-semibold'>Apply Discount Code</p>
                 <p className={`text-2xl font-semibold flex items-center ${discountApplied ? 'text-zinc-400 line-through' : 'text-black'}`}>
                     Regular Price: 
-                    <span className="ml-2">{`$${selectedItem?.price.toFixed(2)}`}</span>
+                    <span className="ml-2">{`$${selectedItem['m_price'].toFixed(2)}`}</span>
                 </p>
 
                 {discountApplied && (
                     <p className='text-4xl font-bold text-green-600'>
-                        Discounted Price: ${selectedItem ? (selectedItem.price - 5).toFixed(2) : ''}
+                        Discounted Price: ${selectedItem ? (selectedItem['m_price'] - 5).toFixed(2) : ''}
                     </p>
                 )}
 

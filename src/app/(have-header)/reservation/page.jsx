@@ -1,20 +1,36 @@
+'use client'
 import Image from "next/image";
 import DotDivider from "../../components/dot_divider";
 import MakeAReservation from "../../components/make-a-reservation";
 import stage from "../../../images/stage.png"
 import ChooseZone from '../../components/choose-zone';
+import {GetTables} from "../../../hook/table"
+import { useEffect, useState } from "react";
+import {CheckUserToken} from "../../../../utils/token"
+import { useRouter } from "next/navigation";
 
 
 
 function ReservationPage() {
+    const [table, setTable] = useState([])
+    const router = useRouter()
 
-    const zones = {
-        "204": 'A', // Available
-        "205": 'R', // Reserved
-        "206": 'O', // Occupied
-        "207": 'A', // Available
-        "208": 'R', // Reserved
-    };
+    useEffect(()=>{
+        if(!CheckUserToken()){
+            return router.push('/login')
+        }
+        const fetchData = async() =>{
+            const res = await GetTables()
+            
+            if(res.status === 200){
+                console.log(res.data.payload.tables.tables)
+                setTable(res.data.payload.tables.tables)
+            }
+        }
+
+        fetchData();
+    }
+    ,[])
 
     return (
         <div className="bg-background flex flex-col items-center py-10 gap-9">
@@ -24,10 +40,10 @@ function ReservationPage() {
             <DotDivider></DotDivider>
             <div className="flex flex-row gap-8 justify-center">
                 <div className="w-1/2 ">
-                    <Image src={stage}></Image>
+                    <Image src={stage} alt="stage"></Image>
                 </div>
                 <div className="flex flex-col items-center justify-center">
-                    <ChooseZone zones={zones}></ChooseZone>
+                    <ChooseZone zones={table}></ChooseZone>
                 </div>
             </div>
         </div>);
