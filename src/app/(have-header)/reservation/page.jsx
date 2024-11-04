@@ -4,9 +4,10 @@ import DotDivider from "../../components/dot_divider";
 import MakeAReservation from "../../components/make-a-reservation";
 import stage from "../../../images/stage.png"
 import ChooseZone from '../../components/choose-zone';
-import { useState, useEffect } from "react";
+import {GetTables} from "../../../hook/table"
+import { useEffect, useState } from "react";
+import {CheckUserToken} from "../../../../utils/token"
 import { useRouter } from "next/navigation";
-import { GetTables } from "../../../hook/table";
 
 
 
@@ -39,10 +40,10 @@ function ReservationPage() {
             <DotDivider></DotDivider>
             <div className="flex flex-row gap-8 justify-center">
                 <div className="w-1/2 ">
-                    <Image src={stage} alt="stage.png"></Image>
+                    <Image src={stage} alt="stage"></Image>
                 </div>
                 <div className="flex flex-col items-center justify-center">
-                    <ChooseZone zones={zones}></ChooseZone>
+                    <ChooseZone zones={table}></ChooseZone>
                 </div>
             </div>
         </div>);
