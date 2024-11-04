@@ -23,6 +23,7 @@ export default function Navbar() {
   const handleLogout = () => {
     sessionStorage.removeItem("user");
     setIsLogin(false);
+    router.push("/homepage");
   };
 
   useEffect(() => {
@@ -75,11 +76,11 @@ export default function Navbar() {
           <button onClick={() => router.push("/")} className="p-4 hover:bg-main hover:text-background">
             HOME
           </button>
-          <button onClick={() => router.push("/schedule")} className="p-4 hover:bg-main hover:text-background">
+          <button onClick={() => router.push("/")} className="p-4 hover:bg-main hover:text-background">
             SCHEDULE
           </button>
-          <button onClick={() => router.push("/review")} className="p-4 hover:bg-main hover:text-background">
-            REVIEW
+          <button onClick={() => router.push("/history")} className="p-4 hover:bg-main hover:text-background">
+            HISTORY
           </button>
           <button onClick={isLogin ? handleLogout : () => router.push("/login")} className="p-4 hover:bg-main hover:text-background">
             {isLogin ? "LOGOUT" : "SIGN IN"}
@@ -104,8 +105,8 @@ export default function Navbar() {
               SCHEDULE
             </button>
             <DotDivider />
-            <button onClick={() => router.push("/review")} className="flex justify-center items-center flex-1 h-full hover:text-main">
-              REVIEW
+            <button onClick={() => router.push("/history")} className="flex justify-center items-center flex-1 h-full hover:text-main">
+              HISTORY
             </button>
           </div>
 
