@@ -1,10 +1,14 @@
 "use client";
 
+import CorrectMark from "../../components/correctMark";
+import Denied from "../../components/denied";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
 export default function Table() {
     const [tables, setTables] = useState([]);
+    const [isCorrect, setIsCorrect] = useState(false);
+    const [isDenied, setIsDenied] = useState(false);
 
     const approvedButton = async (table) => {
         try {
@@ -13,7 +17,8 @@ export default function Table() {
                 c_id: table.name,
                 t_status: "O",
             });
-            alert("Table approved:", response.data);
+            setIsCorrect(true);
+            setTimeout(() => setIsCorrect(false), 2000);
 
             // Update the tables state to remove the approved table
             setTables((prevTables) => prevTables.filter((t) => t.id !== table.id));
@@ -29,7 +34,8 @@ export default function Table() {
                 c_id: table.name,
                 t_status: "A",
             });
-            alert("Table denied:", response.data);
+            setIsDenied(true);
+            setTimeout(() => setIsDenied(false), 2000);
             setTables((prevTables) => prevTables.filter((t) => t.id !== table.id));
         } catch (error) {
             console.error("Error denying table:", error);
@@ -49,17 +55,17 @@ export default function Table() {
                             name: table.c_id, // Assuming c_id is the customer name
                         }))
                         .sort((a, b) => a.id - b.id); // Sort by id
-    
+
                     setTables(formattedTables);
                 }
             } catch (error) {
                 console.error("Error fetching tables:", error);
             }
         };
-    
+
         fetchTables();
     }, []);
-    
+
 
     return (
         <div className="bg-background w-screen h-screen justify-items-center pt-6">
@@ -103,6 +109,16 @@ export default function Table() {
                     <p className="text-sm opacity-70">Please check back later.</p>
                 </div>
             )}
+            {isCorrect &&
+                <div className="fixed inset-0 bg-background bg-opacity-90 flex items-center justify-center z-50 p-4 sm:p-8">
+                    <CorrectMark message="Table approved" />
+                </div>
+            }
+            {isDenied &&
+                <div className="fixed inset-0 bg-background bg-opacity-90 flex items-center justify-center z-50 p-4 sm:p-8">
+                    <Denied message="Table reject" />
+                </div>
+            }
         </div>
     );
 }

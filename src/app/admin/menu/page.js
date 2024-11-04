@@ -1,7 +1,6 @@
 "use client";
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import stage from "../../../images/stage.png"; // This can be removed if you're not using it
 
 export default function Menu() {
     const [menu, setMenu] = useState([]);

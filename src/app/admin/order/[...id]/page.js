@@ -1,5 +1,6 @@
 "use client";
 import { useParams } from "next/navigation";
+import Image from "next/image";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
@@ -82,7 +83,7 @@ export default function OrderDetail() {
                                 {orderLine.map((line) => (
                                     <tr key={line.id} className="border-2 border-main">
                                         <td className="border-2 border-main p-4 text-center">
-                                            <img src={line.m_pic} width="150" height="150" alt="Menu Item" className="object-cover" />
+                                            <Image src={line.m_pic} width={150} height={150} alt="Menu Item" className="object-cover" />
                                         </td>
                                         <td className="border-2 border-main p-4">{line.m_description}</td>
                                         <td className="border-2 border-main p-4 text-center">{line.m_price.toFixed(2)}</td>
