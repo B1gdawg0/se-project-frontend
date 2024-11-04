@@ -1,6 +1,6 @@
 "use client";
 
-export default function ShowCard({ name, desc, time, link }) {
+export default function ShowCard({ name, desc, time}) {
   return (
     <div className="flex flex-row justify-between items-center bg-[#2A2A2A] w-[80rem] h-[10rem] px-4 cursor-pointer border-[1px] border-main">
       <div className="flex flex-col items-start text-white w-2/6">

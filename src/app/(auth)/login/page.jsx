@@ -15,14 +15,19 @@ export default function RegisterPage() {
   const Login = async()=>{
     const {email, password} = formData
     if(!email || !password) return alert("You must fill email and password field before login")
+    console.log(process.env.ADMIN_EMAIL)
+    if(email == process.env.NEXT_PUBLIC_ADMIN_EMAIL && password == process.env.NEXT_PUBLIC_ADMIN_PASSWORD) return router.push("/admin/table")
     const res = await LoginAPI(formData)
 
     if(res.status === 200){
-      const {token} = res.data
+      const {user,token} = res.data
       sessionStorage.setItem("user",JSON.stringify({
         email,
-        token
+        token,
+        user
       }))
+
+      
       return router.push("/homepage")
     }
 

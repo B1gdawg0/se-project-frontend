@@ -8,6 +8,7 @@ import {GetTables} from "../../../hook/table"
 import { useEffect, useState } from "react";
 import {CheckUserToken} from "../../../../utils/token"
 import { useRouter } from "next/navigation";
+import { GetUserData } from "../../../../utils/user";
 
 
 
@@ -15,14 +16,14 @@ function ReservationPage() {
     const [table, setTable] = useState([])
     const router = useRouter()
 
-    useEffect(()=>{
-        if(!CheckUserToken()){
+    useEffect(() => {
+        if (!CheckUserToken()) {
             return router.push('/login')
         }
-        const fetchData = async() =>{
+        const fetchData = async () => {
             const res = await GetTables()
-            
-            if(res.status === 200){
+
+            if (res.status === 200) {
                 console.log(res.data.payload.tables.tables)
                 setTable(res.data.payload.tables.tables)
             }
@@ -30,7 +31,7 @@ function ReservationPage() {
 
         fetchData();
     }
-    ,[])
+        , [])
 
     return (
         <div className="bg-background flex flex-col items-center py-10 gap-9">

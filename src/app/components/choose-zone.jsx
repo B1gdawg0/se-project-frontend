@@ -7,6 +7,8 @@ import { useRouter } from 'next/navigation';
 import {GetMenu} from "../../hook/menu"
 import { CheckUserToken } from '../../../utils/token';
 import { BookTable } from '../../hook/table';
+import { GetUser } from '../../hook/user';
+import { GetUserData } from '../../../utils/user';
 
 function ChooseZone({zones}) {
     const [isButtonVisible, setButtonVisible] = useState(true);
@@ -20,9 +22,10 @@ function ChooseZone({zones}) {
 
     const createFirstOrder = async ()=>{
         try{
+            const user = GetUserData();
             const data = {
                 payload:{
-                    "c_id":"e7d23c44-a55c-4e27-bf7c-d451fc07a47c",
+                    "c_id":user.ID,
                     "t_status": "R",
                     "orderline": {
                         "m_id": selectedItem['m_id'],
@@ -71,7 +74,7 @@ function ChooseZone({zones}) {
 
     const handleZoneClick = (zone) => {
         if (zones[zone]['t_status'] === 'A') {
-            setZone(zone);
+            setZone(zones[zone]['t_id']);
             setButtonVisible(false);
             setDropdownVisible(false);
             setConfirmCardVisible(1);
