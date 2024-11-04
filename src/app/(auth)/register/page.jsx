@@ -2,6 +2,7 @@
 import { useState } from "react";
 import {RegisterAPI} from "../../../hook/auth"
 import { useRouter } from "next/navigation";
+import Back from "../../svg/BackButton";
 
 export default function LoginPage() {
   const [formData, setFormData] = useState({
@@ -39,7 +40,12 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="w-screen h-screen bg-background p-[3.75rem] text-white">
+    <div className="w-screen h-screen bg-background p-[3.75rem] relative text-white">
+      <div className="absolute top-20 left-20">
+              <button onClick={() => router.push("/dashboard")}>
+                <Back />
+              </button>
+            </div>
       <div className="flex flex-col w-full h-full border-main border-2">
         <div className="flex flex-col justify-between items-center h-full my-5 mx-[1.25rem] ">
           <svg xmlns="http://www.w3.org/2000/svg" width="146" height="189" viewBox="0 0 146 189" fill="none">

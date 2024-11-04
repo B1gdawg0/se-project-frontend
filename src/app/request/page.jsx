@@ -2,7 +2,8 @@
 import axios from "axios";
 import { GetToken } from "../../hook/token"
 import { useState } from "react";
-
+import { useRouter } from "next/navigation";
+import Back from "../svg/BackButton";
 export default function RequestPage() {
     const [isRequestSong, setIsRequestSong] = useState(false);
     const [isIgPosting, setIsIgPosting] = useState(false);
@@ -11,6 +12,7 @@ export default function RequestPage() {
     const [igAccount, setIgAccount] = useState("");
     const [igImage, setIgImage] = useState(null);
     const [imagePreview, setImagePreview] = useState(null);
+    const router = useRouter();
 
     function handleRequestSong() {
         setIsRequestSong(true);
@@ -102,7 +104,12 @@ export default function RequestPage() {
     }
 
     return (
-        <div className="bg-background w-screen h-screen p-5 flex items-center justify-center">
+        <div className="bg-background w-screen h-screen p-5 flex items-center relative justify-center">
+            <div className="absolute top-8 left-8">
+              <button onClick={() => router.push("/dashboard")}>
+                <Back />
+              </button>
+            </div>
             <div className="border-2 border-gold w-full h-full rounded-lg shadow-lg overflow-hidden">
                 <div className="flex flex-col h-full w-full">
                     {/* Topic Choosing */}
