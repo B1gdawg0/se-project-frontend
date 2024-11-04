@@ -87,7 +87,7 @@ export default function Page() {
                 <Back />
               </button>
             </div>
-            <AddProductProduct menu={menu}/>
+            <AddProductProduct menu={menu} setIsClick={setIsClick} calculateCartItems={calculateCartItems}/>
           </div>
         </div>
       )}
