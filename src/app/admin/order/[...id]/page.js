@@ -83,7 +83,7 @@ export default function OrderDetail() {
                                 {orderLine.map((line) => (
                                     <tr key={line.id} className="border-2 border-main">
                                         <td className="border-2 border-main p-4 text-center">
-                                            <Image src={line.m_pic} width={150} height={150} alt="Menu Item" className="object-cover" />
+                                            <Image src={line.m_pic} width={200} height={200} alt="Menu Item" />
                                         </td>
                                         <td className="border-2 border-main p-4">{line.m_description}</td>
                                         <td className="border-2 border-main p-4 text-center">{line.m_price.toFixed(2)}</td>
@@ -98,9 +98,9 @@ export default function OrderDetail() {
                     )}
                 </div>
     
-                <div className="bg-secondary_main border-2 border-main p-5 rounded-lg shadow-lg text-white max-h-96 overflow-y-auto">
+                <div className="bg-secondary_main border-2 border-main p-5 rounded-lg shadow-lg text-white h-full overflow-y-auto">
                     <div className="flex flex-col justify-between h-full">
-                        <div className="min-w-72 text-left space-y-4 ">
+                        <div className="min-w-74 text-left space-y-4 ">
                             <div className="flex flex-row justify-between mb-2">
                                 <div><strong>Order ID:</strong></div>
                                 <div>{order.id}</div>
@@ -126,18 +126,11 @@ export default function OrderDetail() {
                                 <a href={order.o_urlslip} className="text-blue-500 underline hover:text-blue-300 transition-colors">View Slip</a>
                             </div>
                         </div>
-                        <div>
-                            <button
-                                type="button"
-                                className="w-full py-2 rounded bg-green-500 text-white font-semibold uppercase transition duration-150 ease-in-out hover:bg-green-600"
-                            >
-                                Approve
-                            </button>
-                        </div>
+                        
                     </div>
                 </div>
             </div>
         </div>
     );
     
-}    
+} 
