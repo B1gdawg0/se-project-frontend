@@ -75,6 +75,7 @@ export default function Page() {
       setTimeout(() => setIsPurchased(false), 2000);
       sessionStorage.removeItem("cart"); // Clear cart from sessionStorage
       setCart([]); // Clear cart from state
+      router.push("/order");
     } catch (error) {
       console.error("Error posting order:", error);
     }
