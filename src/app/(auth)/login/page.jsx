@@ -20,10 +20,11 @@ export default function RegisterPage() {
     const res = await LoginAPI(formData)
 
     if(res.status === 200){
-      const {token} = res.data
+      const {user,token} = res.data
       sessionStorage.setItem("user",JSON.stringify({
         email,
-        token
+        token,
+        user
       }))
 
       
