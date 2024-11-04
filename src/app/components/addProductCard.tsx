@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 export default function OrderCard({ menu, setIsClick, calculateCartItems }) {
   const router = useRouter();
   const [quantity, setQuantity] = useState(1);
+  const id = menu.m_id
   const menuPrice = menu.m_price; 
   const menuDescription = menu.m_description;
 
@@ -20,7 +21,7 @@ export default function OrderCard({ menu, setIsClick, calculateCartItems }) {
   };
 
   const addToCart = () => {
-
+    console.log(menu)
     const currentCart = JSON.parse(sessionStorage.getItem("cart")) || [];
 
     const existingProductIndex = currentCart.findIndex(item => item.description === menuDescription);
@@ -29,7 +30,7 @@ export default function OrderCard({ menu, setIsClick, calculateCartItems }) {
       currentCart[existingProductIndex].quantity += quantity;
       
     } else {
-      currentCart.push({ description: menuDescription, quantity, price: menuPrice});
+      currentCart.push({id: id, description: menuDescription, quantity, price: menuPrice});
     }
     sessionStorage.setItem("cart", JSON.stringify(currentCart));
     setIsClick(false)
