@@ -6,6 +6,7 @@ import beer from "../../images/beer.png";
 import { useRouter } from 'next/navigation';
 import {GetMenu} from "../../hook/menu"
 import { CheckUserToken } from '../../../utils/token';
+import { BookTable } from '../../hook/table';
 
 function ChooseZone({zones}) {
     const [isButtonVisible, setButtonVisible] = useState(true);
@@ -16,6 +17,30 @@ function ChooseZone({zones}) {
     const [discountApplied, setDiscountApplied] = useState(false);
     const [menu, setMenu] = useState(null)
     const router = useRouter();
+
+    const createFirstOrder = async ()=>{
+        try{
+            const data = {
+                payload:{
+                    "c_id":"e7d23c44-a55c-4e27-bf7c-d451fc07a47c",
+                    "t_status": "R",
+                    "orderline": {
+                        "m_id": selectedItem['m_id'],
+                        "quantity": "1",
+                        "price": `${selectedItem['m_price']}`,
+                        }
+                },
+                TID:zone
+            }
+    
+            const res = await BookTable(data)
+            if(res.status === 200){
+                return setConfirmCardVisible(3)
+            }
+        }catch(err){
+            alert(err)
+        }
+    }
 
     const handleApplyDiscount = () => {
         setDiscountApplied(true);
@@ -83,7 +108,7 @@ function ChooseZone({zones}) {
                             onClick={() => handleZoneClick(zoneKey)}
                             className="p-4 text-white transition-transform duration-300 hover:scale-105 hover:border-2 hover:border-white rounded-md text-3xl cursor-pointer">
                             <div className='flex justify-between'>
-                                <p className="font-semibold">Table {zoneKey}</p>
+                                <p className="font-semibold">Table {obj['t_id']}</p>
                                 <p className={`font-normal ${obj['t_status'] === 'A' ? 'text-green-500' : 'text-red-500'}`}>
                                     {obj['t_status'] === 'A' ? 'Available' : 'Not Available'}
                                 </p>
@@ -155,7 +180,7 @@ function ChooseZone({zones}) {
                     </p>
                 )}
 
-                <button className='px-8 py-3 text-xl bg-black text-white font-bold rounded-lg' onClick={() => setConfirmCardVisible(3)}>
+                <button className='px-8 py-3 text-xl bg-black text-white font-bold rounded-lg' onClick={createFirstOrder}>
                     Pay
                 </button>
             </div>
