@@ -3,7 +3,7 @@ import Grape from "../svg/Grape";
 import Order from "../components/order"; // Ensure this component displays individual orders correctly
 import Back from "../svg/BackButton";
 import { useRouter } from "next/navigation";
-import { useState, useEffect } from "react";
+import { useState, useEffect, use } from "react";
 import axios from "axios";
 import CorrectMark from "../components/correctMark";
 import Image from "next/image";
@@ -15,12 +15,21 @@ export default function Page() {
   const [isClickPurchase, setIsClickPurchase] = useState(false);
   const [file, setFile] = useState(null); // State to hold selected file
   const [receiptUrl, setReceiptUrl] = useState("");
-
+  const [user, setUser] = useState({});
+  const [tableID, setTableID] = useState("");
+  const [table, SetTable] = useState([]);
 
   useEffect(() => {
-    // Load cart items from sessionStorage and add totalPrice to each item
+    // Retrieve and parse user data from session storage
+    const userData = JSON.parse(sessionStorage.getItem("user"))?.user || {};
+    setUser(userData);
+
+    // Filter tables with status "R" if user data contains tables
+    const reservedTables =
+      userData.Tables?.filter((table) => table.Status === "R") || [];
+    SetTable(reservedTables);
     const savedCart = JSON.parse(sessionStorage.getItem("cart")) || [];
-    const updatedCart = savedCart.map(item => ({
+    const updatedCart = savedCart.map((item) => ({
       ...item,
       totalPrice: (item.price * item.quantity).toFixed(2), // Calculate total price
     }));
@@ -28,10 +37,10 @@ export default function Page() {
   }, []);
 
   const handleUpdateCart = (updatedCart) => {
-    setCart(updatedCart); 
+    setCart(updatedCart);
   };
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = (e) => {
     const file = e.target.files?.[0];
     if (file) {
       setFile(file);
@@ -45,11 +54,14 @@ export default function Page() {
   };
 
   const handlePost = async () => {
-    console.log(file)
+    console.log(file);
+    if (tableID == "") {
+      return;
+    }
     const orderData = {
-      t_id: "1", // Replace with dynamic transaction ID if available
-      o_url: receiptUrl, // Replace with your actual order URL if available
-      orderlines: cart.map(item => ({
+      t_id: tableID, // Selected table ID
+      o_url: receiptUrl, // Order receipt URL
+      orderlines: cart.map((item) => ({
         m_id: item.id,
         quantity: item.quantity.toString(),
         price: item.price.toString(),
@@ -58,7 +70,7 @@ export default function Page() {
 
     try {
       await axios.post("http://127.0.0.1:8000/orders/w-olines", orderData);
-      setIsClickPurchase(false)
+      setIsClickPurchase(false);
       setIsPurchased(true);
       setTimeout(() => setIsPurchased(false), 2000);
       sessionStorage.removeItem("cart"); // Clear cart from sessionStorage
@@ -80,9 +92,12 @@ export default function Page() {
         <div className="flex justify-center mb-4">
           <Grape />
         </div>
-        <h1 className="text-main text-4xl font-semibold text-center mb-2">These are your orders</h1>
+        <h1 className="text-main text-4xl font-semibold text-center mb-2">
+          These are your orders
+        </h1>
         <p className="text-white text-2xl text-center">
-          Please check your items carefully before making a payment. We do not refund for any reason.
+          Please check your items carefully before making a payment. We do not
+          refund for any reason.
         </p>
       </div>
 
@@ -93,14 +108,19 @@ export default function Page() {
             <Order key={index} product={item} onUpdateCart={handleUpdateCart} />
           ))
         ) : (
-          <div className="text-center text-white text-2xl">Your cart is empty.</div>
+          <div className="text-center text-white text-2xl">
+            Your cart is empty.
+          </div>
         )}
       </div>
 
       {/* Purchase Button */}
       <div className="flex justify-center mx-8 mt-8">
         {cart.length > 0 ? (
-          <button onClick={handlePurchase} className="bg-main text-black rounded-xl w-2/4 py-4 text-3xl font-bold my-8 hover:bg-opacity-80 transition duration-300">
+          <button
+            onClick={handlePurchase}
+            className="bg-main text-black rounded-xl w-2/4 py-4 text-3xl font-bold my-8 hover:bg-opacity-80 transition duration-300"
+          >
             Purchase
           </button>
         ) : (
@@ -115,10 +135,39 @@ export default function Page() {
         <div className="fixed inset-0 bg-background bg-opacity-90 flex items-center justify-center z-50 p-4 sm:p-8">
           <div className="bg-background p-6 border border-main rounded-lg shadow-lg">
             <div className="flex justify-center mb-4">
-              <Image src="https://www.scb.co.th/content/media/personal-banking/digital-banking/scb-easy/how-to/qr-code/qr-code-generated-7.jpg" width={250} height={250} alt="QR-Code" />
+              <Image
+                src="https://www.scb.co.th/content/media/personal-banking/digital-banking/scb-easy/how-to/qr-code/qr-code-generated-7.jpg"
+                width={250}
+                height={250}
+                alt="QR-Code"
+              />
             </div>
             <div className="flex flex-col mb-4">
-              <label className="mb-2 text-sm font-medium text-gray-900" htmlFor="file_input">Upload file</label>
+              <label
+                className="mb-2 text-sm font-medium text-gray-900"
+                htmlFor="table_select"
+              >
+                Select Table
+              </label>
+              <select
+                id="table_select"
+                value={tableID}
+                onChange={(e) => setTableID(e.target.value)}
+                className="text-black border border-gray-300 rounded-lg bg-gray-50 p-2 mb-4"
+              >
+                <option value="">Choose a table</option>
+                {table.map((tableNumber) => (
+                  <option key={tableNumber.ID} value={tableNumber.ID}>
+                    Table {tableNumber.ID}
+                  </option>
+                ))}
+              </select>
+              <label
+                className="mb-2 text-sm font-medium text-gray-900"
+                htmlFor="file_input"
+              >
+                Upload file
+              </label>
               <input
                 id="file_input"
                 type="file"
@@ -129,7 +178,10 @@ export default function Page() {
                 {file ? file.name : "No file selected"}
               </div>
             </div>
-            <button onClick={handlePost} className="bg-main text-black rounded-xl w-full py-2 text-lg font-bold my-2 hover:bg-opacity-80 transition duration-300">
+            <button
+              onClick={handlePost}
+              className="bg-main text-black rounded-xl w-full py-2 text-lg font-bold my-2 hover:bg-opacity-80 transition duration-300"
+            >
               Confirm Purchase
             </button>
           </div>
