@@ -21,14 +21,14 @@ export default function OrderDetail() {
             try {
                 const response = await axios.get(`http://localhost:8000/orders/id=${id}`);
                 const orderData = response.data.payload.order; // ดึงข้อมูลคำสั่งจาก response
-
+                console.log(orderData)
                 // อัปเดตสถานะ order ตามข้อมูลที่ได้จาก API
                 setOrder({
                     id: orderData.o_id,
                     t_id: orderData.t_id,
                     o_time: orderData.o_time,
                     o_status: "Approved", // ปรับให้เป็นค่าที่ได้จาก API ถ้ามี
-                    o_urlslip: orderData.l_urlslip || "https://example.com/slip.pdf", // ใช้ URL slip ที่ได้จาก API
+                    o_urlslip: orderData.o_url || "", // ใช้ URL slip ที่ได้จาก API
                     o_total: 0, // เริ่มต้นด้วย 0
                 });
             } catch (error) {
