@@ -27,7 +27,7 @@ export default function Instagram() {
     }, []);
 
     return (
-        <div className="bg-background w-screen h-screen flex justify-center items-start p-6">
+        <div className="bg-background w-screen  flex justify-center items-start p-6">
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 w-full max-w-6xl">
                 {instagram.map((item) => (
                     <div
@@ -36,9 +36,10 @@ export default function Instagram() {
                     >
                         <img
                             src={item.image}
-                            alt={item.ig_name}
+                            alt={item.image}
                             className="w-full h-full object-cover max-w-52 max-h-52 rounded-md shadow-2xl"
                             style={{ width: "200px", height: "200px" }} // Square dimensions
+                            
                         />
                         <div className="flex flex-col text-center mt-4">
                             <div className="text-main text-xl font-bold mb-2 break-words">
