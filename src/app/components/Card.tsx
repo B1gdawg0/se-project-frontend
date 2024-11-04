@@ -1,6 +1,19 @@
+import React from "react";
 import WineBottle from "../svg/WineBottle";
 
-export default function Card() {
+const Card = ({ id, status }) => {
+  let s;
+  switch (status) {
+    case "R":
+      s = "Reserved";
+      break;
+    case "O":
+      s = "Occupied";
+      break;
+    default:
+      s = "Available"
+      break;
+  }
   return (
     <div className="flex flex-col md:flex-row border-2 border-main p-4 sm:p-6 md:p-8 lg:p-10 xl:p-12 mx-[4rem] sm:mx-[6rem] md:mx-[8rem] lg:mx-[10rem] xl:mx-[20rem] mt-6">
       {/* Image */}
@@ -17,14 +30,16 @@ export default function Card() {
           </div>
           {/* Table */}
           <div>
-            Table: HKT:1
+            Table: {id}
           </div>
         </div>
         {/* Status */}
         <div className="flex items-center">
-          Status: Pending....
+          Status: {s}
         </div>
       </div>
     </div>
   );
-}
+};
+
+export default Card;
