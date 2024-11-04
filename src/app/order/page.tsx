@@ -69,7 +69,7 @@ export default function Page() {
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
             {menuItems.map((item) => (
               <div key={item.m_id} onClick={() => handleClick(item)}>
-                <OrderCard product={{ price: item.m_price, description: item.m_description, url: item.m_url }} />
+                <OrderCard product={{id:item.m_id, price: item.m_price, description: item.m_description, url: item.m_url }} />
               </div>
             ))}
           </div>
@@ -87,7 +87,7 @@ export default function Page() {
                 <Back />
               </button>
             </div>
-            <AddProductProduct menu={menu}/>
+            <AddProductProduct menu={menu} setIsClick={setIsClick} calculateCartItems={calculateCartItems}/>
           </div>
         </div>
       )}
