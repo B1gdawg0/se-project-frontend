@@ -66,12 +66,12 @@ export default function Navbar() {
         </div>
 
         {/* middle section */}
-        <div className="flex flex-row justify-center items-center text-white">
-          <div className="flex justify-center items-center text-[4rem]"> THE GROOVE ROOM</div>
-        </div>
+        <button onClick={() => router.push("/homepage")} className="flex flex-row justify-center text-[4rem] items-center text-white transition transform hover:scale-105">
+          THE GROOVE ROOM
+        </button>
         {/* third section */}
         <div className="flex flex-row justify-between w-[19rem] h-[6rem] text-white text-[1.125rem] ">
-          <div className="flex justify-center items-center hover:cursor-pointer hover:text-main"> SIGN IN </div>
+          <button onClick={() => router.push("/login")} className="flex justify-center items-center hover:cursor-pointer hover:text-main"> SIGN IN </button>
           <div className="flex flex-row  px-3 text-main transition-all  hover:bg-main hover:text-background hover:cursor-pointer  hover:text-[1.3rem]">
             <button className="flex flex-row gap-2 justify-center items-center" onClick={() => { router.push("/reservation") }}>
               <CiBeerMugFull className="w-[1.23rem] h-[1.23rem]" />
