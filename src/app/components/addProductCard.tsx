@@ -3,10 +3,10 @@ import { useState } from "react";
 import { FaMinus, FaPlus } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 
-export default function OrderCard({ menu }) {
+export default function OrderCard({ menu, setIsClick, calculateCartItems }) {
   const router = useRouter();
   const [quantity, setQuantity] = useState(1);
-  const menuPrice = menu.m_price; // Get price from the menu item
+  const menuPrice = menu.m_price; 
   const menuDescription = menu.m_description;
 
   const increment = () => {
@@ -20,25 +20,22 @@ export default function OrderCard({ menu }) {
   };
 
   const addToCart = () => {
-    // Retrieve the current cart from session storage or initialize an empty array
+
     const currentCart = JSON.parse(sessionStorage.getItem("cart")) || [];
 
-    // Check if the product already exists in the cart
     const existingProductIndex = currentCart.findIndex(item => item.description === menuDescription);
 
     if (existingProductIndex !== -1) {
       currentCart[existingProductIndex].quantity += quantity;
-      currentCart[existingProductIndex].price = menuPrice * currentCart[existingProductIndex].quantity;
+      
     } else {
-      currentCart.push({ description: menuDescription, quantity, price: menuPrice * quantity});
+      currentCart.push({ description: menuDescription, quantity, price: menuPrice});
     }
     sessionStorage.setItem("cart", JSON.stringify(currentCart));
-    alert(`Added ${quantity} ${menuDescription} to cart!`);
-    router.refresh(); // Refresh the page or update any necessary state here
+    setIsClick(false)
+    calculateCartItems()
   };
 
-  // Calculate the total price based on quantity
-  const totalPrice = (menuPrice * quantity).toFixed(2); // Formats the price to 2 decimal places
 
   return (
     <div className="flex flex-col items-center gap-[2rem]">
