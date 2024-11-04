@@ -45,7 +45,7 @@ export default function Music() {
     };
 
     return (
-        <div className="bg-background w-screen h-screen flex justify-center items-start p-6">
+        <div className="bg-background w-screen h-full min-h-screen flex justify-center items-start p-6">
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 w-full max-w-6xl">
                 {music.map((item) => (
                     <div
