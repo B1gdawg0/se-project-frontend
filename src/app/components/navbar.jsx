@@ -40,7 +40,7 @@ export default function Navbar() {
         <div className="flex justify-center items-center flex-row gap-4 lg:gap-10">
           <div className="flex flex-row gap-2 items-center text-sm text-white">
             <FaClock />
-            <span className="hidden sm:inline">Open At : 6:00 PM To 2:00 PM</span>
+            <span className="hidden sm:inline">Open At: 6:00 PM To 2:00 PM</span>
           </div>
           <div className="flex flex-row gap-2 items-center text-sm text-white">
             <MdMail />
@@ -76,12 +76,16 @@ export default function Navbar() {
           <button onClick={() => router.push("/")} className="p-4 hover:bg-main hover:text-background">
             HOME
           </button>
-          <button onClick={() => router.push("/")} className="p-4 hover:bg-main hover:text-background">
-            SCHEDULE
-          </button>
-          <button onClick={() => router.push("/history")} className="p-4 hover:bg-main hover:text-background">
-            HISTORY
-          </button>
+          {isLogin ? (
+            <>
+              <button onClick={() => router.push("/dashboard")} className="p-4 hover:bg-main hover:text-background">
+                DASHBOARD
+              </button>
+              <button onClick={() => router.push("/history")} className="p-4 hover:bg-main hover:text-background">
+                HISTORY
+              </button>
+            </>
+          ) : null}
           <button onClick={isLogin ? handleLogout : () => router.push("/login")} className="p-4 hover:bg-main hover:text-background">
             {isLogin ? "LOGOUT" : "SIGN IN"}
           </button>
@@ -97,17 +101,20 @@ export default function Navbar() {
         {/* Desktop Menu */}
         <div className="hidden lg:flex flex-row justify-between items-center w-full">
           <div className="flex flex-row gap-2 px-3 items-center text-white w-96 h-24 text-lg">
-            <button onClick={() => router.push("/")} className="flex justify-center items-center flex-1 h-full hover:text-main">
+            <button onClick={() => router.push("/")} className="hidden  justify-center items-center flex-1 h-full hover:text-main">
               HOME
             </button>
-            <DotDivider />
-            <button onClick={() => router.push("/schedule")} className="flex justify-center items-center flex-1 h-full hover:text-main">
-              SCHEDULE
-            </button>
-            <DotDivider />
-            <button onClick={() => router.push("/history")} className="flex justify-center items-center flex-1 h-full hover:text-main">
-              HISTORY
-            </button>
+            {isLogin && (
+              <>
+                <button onClick={() => router.push("/dashboard")} className="flex justify-center items-center flex-1 h-full hover:text-main">
+                  DASHBOARD
+                </button>
+                <DotDivider />
+                <button onClick={() => router.push("/history")} className="flex justify-center items-center flex-1 h-full hover:text-main">
+                  HISTORY
+                </button>
+              </>
+            )}
           </div>
 
           <button

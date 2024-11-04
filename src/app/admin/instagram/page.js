@@ -27,7 +27,7 @@ export default function Instagram() {
     }, []);
 
     return (
-        <div className="bg-background w-screen  flex justify-center items-start p-6">
+        <div className="bg-background w-screen min-h-screen h-full flex justify-center items-start p-6">
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 w-full max-w-6xl">
                 {instagram.map((item) => (
                     <div
