@@ -191,7 +191,7 @@ export default function Page() {
       {/* Purchase Success Indicator */}
       {isPurchased && (
         <div className="fixed inset-0 bg-background bg-opacity-90 flex items-center justify-center z-50 p-4 sm:p-8">
-          <CorrectMark />
+          <CorrectMark message={""} />
         </div>
       )}
     </div>
