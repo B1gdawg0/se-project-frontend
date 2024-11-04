@@ -81,8 +81,8 @@ export default function Navbar() {
               <button onClick={() => router.push("/dashboard")} className="p-4 hover:bg-main hover:text-background">
                 DASHBOARD
               </button>
-              <button onClick={() => router.push("/history")} className="p-4 hover:bg-main hover:text-background">
-                HISTORY
+              <button onClick={() => router.push("/reserved")} className="p-4 hover:bg-main hover:text-background">
+                RESERVED
               </button>
             </>
           ) : null}
@@ -110,8 +110,8 @@ export default function Navbar() {
                   DASHBOARD
                 </button>
                 <DotDivider />
-                <button onClick={() => router.push("/history")} className="flex justify-center items-center flex-1 h-full hover:text-main">
-                  HISTORY
+                <button onClick={() => router.push("/reserved")} className="flex justify-center items-center flex-1 h-full hover:text-main">
+                  RESERVED
                 </button>
               </>
             )}
