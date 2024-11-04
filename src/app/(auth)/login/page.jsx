@@ -16,7 +16,7 @@ export default function RegisterPage() {
     const {email, password} = formData
     if(!email || !password) return alert("You must fill email and password field before login")
     console.log(process.env.ADMIN_EMAIL)
-    if(email == process.env.NEXT_PUBLIC_ADMIN_EMAIL && password == process.env.NEXT_PUBLIC_ADMIN_PASSWORD) return router.push("/admin/table")
+    
     const res = await LoginAPI(formData)
 
     if(res.status === 200){
@@ -27,7 +27,7 @@ export default function RegisterPage() {
         user
       }))
 
-      
+      if(email == process.env.NEXT_PUBLIC_ADMIN_EMAIL && password == process.env.NEXT_PUBLIC_ADMIN_PASSWORD) return router.push("/admin/table")
       return router.push("/homepage")
     }
 
