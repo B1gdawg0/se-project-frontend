@@ -1,9 +1,11 @@
+'use client'
 import DotDivider from "./dot_divider";
 import localFont from 'next/font/local'
 import { CiBeerMugFull } from "react-icons/ci";
 import { BsFillTelephoneFill } from "react-icons/bs";
 import { FaMapMarkerAlt, FaClock } from "react-icons/fa";
 import { MdMail } from "react-icons/md";
+import { useRouter } from "next/navigation";
 
 
 
@@ -11,8 +13,9 @@ import { MdMail } from "react-icons/md";
 //👇 Configure our local font object
 const perpetuaReg = localFont({ src: '../fonts/perpetua.ttf' })
 
-
 export default function Navbar() {
+  const router = useRouter();
+
   return (
     <div className={`font-${perpetuaReg} w-screen flex flex-col justify-between bg-background`}>
       {/* upper section */}
@@ -69,13 +72,16 @@ export default function Navbar() {
         {/* third section */}
         <div className="flex flex-row justify-between w-[19rem] h-[6rem] text-white text-[1.125rem] ">
           <div className="flex justify-center items-center hover:cursor-pointer hover:text-main"> SIGN IN </div>
-          <div className="flex flex-row gap-2 justify-center items-center px-3 text-main transition-all  hover:bg-main hover:text-background hover:cursor-pointer  hover:text-[1.3rem]">
-            <CiBeerMugFull className="w-[1.23rem] h-[1.23rem]" />
-            RESERVATION
+          <div className="flex flex-row  px-3 text-main transition-all  hover:bg-main hover:text-background hover:cursor-pointer  hover:text-[1.3rem]">
+            <button className="flex flex-row gap-2 justify-center items-center" onClick={() => { router.push("/reservation") }}>
+              <CiBeerMugFull className="w-[1.23rem] h-[1.23rem]" />
+              RESERVATION
+            </button>
           </div>
         </div>
 
+
       </div>
-    </div>
+    </div >
   );
 }
