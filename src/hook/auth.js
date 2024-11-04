@@ -12,7 +12,7 @@ export function RegisterAPI(data){
     return axios.post("http://127.0.0.1:8000/auth/register",{
         email:data.email,
         password:data.password,
-        name:data.name,
+        name:data.fname+" "+data.lname,
         phone:data.phone
     })
 }
